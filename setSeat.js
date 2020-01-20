@@ -1,12 +1,11 @@
 var matrix = []
 
-var totalColumn = 6, totalRow = 31;
-var price;
+var price, newMatrix = [];
 var priceFirst = 50, priceSecond = 40, priceThird = 25;
 var seatToLocate = 1;
 var id = 0;
-var firstCycle = true;
 createMatrix();
+seatToLocate == 1 ? assegnateSeatOnePerson() : null
 seatToLocate == 1 ? assegnateSeatOnePerson() : null
 
 function changeInfo ( value, desc ) {
@@ -19,6 +18,7 @@ function changeInfo ( value, desc ) {
  }
 
 function createMatrix() {
+    var totalColumn = 6, totalRow = 15;
     for(var i=0; i<totalRow; i++){
         for(var a=0; a<totalColumn; a++){
             var positionSeat;
@@ -39,7 +39,8 @@ function createMatrix() {
                 "row":positionSeat,
                 "column":i,
                 "price":price,
-                "id":id
+                "id":id,
+                "occuped":false
             }
             matrix.push(seat)
             id++;
@@ -48,10 +49,11 @@ function createMatrix() {
 }
 
 function assegnateSeatOnePerson(){
+    var firstCycle = true;
     matrix.map((item,index) => {
         var res = null
         if(item.price == priceThird){
-            if(item.row != "B" && item.row != "E"){
+            if(item.row != "B" && item.row != "E" && !item.occuped){
                 if(firstCycle){
                     res = matrix.filter((value) => {
                         if(value.id === index) {
@@ -62,13 +64,10 @@ function assegnateSeatOnePerson(){
                             return null
                         }
                     })
-                    changeInfo(index,res)
+                    changeInfo(index,matrix)
                 }
             }
         }
     })
+    console.log(matrix)
 }
-
-console.log(matrix)
-
-
